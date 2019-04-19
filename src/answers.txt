@@ -1,0 +1,205 @@
+https://drive.google.com/file/d/0B0wKchjfIGglbVVvb1RDbEc4eFk/view
+https://freeexampapers.com/exam-papers/IB/Computer-Science/Higher/2014-May/Computer_science_paper_2__HL_markscheme.pdf
+
+14:
+(a) State the relationship between the Genus and Species objects.
+
+Genus is the superclass, Species is the subclass. Inheritance relationship.
+Species inherits from/"extends" Genus.
+
+
+(b) State the relationship between the Species and Specimen objects.
+
+Composition relationship. Each Specimen "has a" Species object, which is stored in an instance variable within a given Specimen.
+
+
+(c) Construct the unified modelling language (UML) diagram for the Species object.
+
+***IB formats this differently: no +/- for public/private, data type is before instance name, methods take parameters
+ ____________________________
+| Species                    |
+|____________________________|
+| - speciesName: String      |
+|____________________________|
+| + setSpeciesName()         |
+| + getSpeciesName(): String |
+| + toString(): String       |
+| + equals(): boolean        |
+|____________________________|
+
+
+
+//oops! this one is for Specimen, not Species.
+ ________________________
+| Specimen               |
+|________________________|
+| - name: String         |
+| - cageNumber: int      |
+| - toa: Species         |
+|________________________|
+| + getName(): String    |
+| + setCage(): void      |
+| + setToa(): void       |
+| + getName(): String    |
+| + getCage(): int       |
+| + getToa(): Species    |
+| + toString(): String   |
+|________________________|
+
+
+*R* (d) Outline two ways in which the programming team can benefit from the way the
+relationships between the three objects, Specimen, Species and Genus, have been
+represented in the code.
+
+Avoids code duplication: because Species inherits from Genus, methods in Genus do not need to be rewritten in Species.
+Matches real-world relationship between Species and Genus: in real life, Species are a subclass of Genus, so this
+method of organizing the three objects is intuitive.
+Faster to develop (less code to write): compositional relationships may require more code to write than inheritance
+relationships.
+
+
+(e) The Genus class implements a toString() method that produces an output string that is
+different from the one produced by the toString() method in the Species class.
+Consider the following code fragment:
+Species human = new Species ( "homo", "sapiens" );
+System.out.println( human.toString() );
+***(i) Outline why calling the toString() method in this code does not cause an error.
+
+The Species "human" is initialized correctly, both "homo" and "sapiens" are Strings.
+
+
+(ii) Identify the term for this property.
+
+Overriding the superclass method. / "Polymorphism"
+*** why, though?
+
+***15. (a) Define the term encapsulation.
+
+Encapsulation takes pieces of code and separates them into isolated classes.
+The process of wrapping data and methods into discrete units using classes, concealing the implementation of these units,
+and allowing outside interaction through accessor methods.
+
+
+(b) Outline two benefits provided by encapsulation.
+
+1. Protects data stored inside the code from being accessed or mutated in unintended ways.
+2. Keeps the structure of the code clear and easier to understand and work with.
+
+
+(c) Identify an accessor method in the Specimen class.
+
+getName()
+
+
+(d) Identify an instance variable in the Specimen class.
+
+cageNumber
+
+
+(e) Construct code for the Genus object including a constructor, accessor methods and a
+toString() method.
+
+public class Genus {
+    private String genusName;
+
+    public Genus(String g){
+        setGenusName(g);
+    }
+
+    public String getGenusName(){
+        return this.genusName;
+    }
+
+    public void setGenusName(String g) {
+        this.genusName = g;
+    }
+
+    public String toString(){
+        return "Genus: " + this.getGenusName(); // or just genusName/this.genusName
+    }
+}
+
+
+The Specimen object could have been designed as a sub-class of the Species object.
+(f) Outline one advantage and one disadvantage of having the Specimen object as a
+sub-class of the Species object.
+
+Advantage: inherits the methods of the Species object, each Specimen only has to be of one species. It is
+simpler and easier to understand the functionality of the system.
+Disadvantage: Specimens aren't a subtype of Species—they're different things, which might mean being
+a subclass might not make as much sense. Additionally, the Specimen will then depend on the Species
+superclass for some of its functionality, which may not be well suited for the needs of the Specimen class.
+Less flexible. Conflicts with method or property names may occur. Composition is adequate if you need
+to use some but not all of the functionality of the second class.
+
+
+16. (a) Outline the changes that would be needed in order to add a description of each animal’s
+individual markings to the program.
+
+Add a private String instance variable to the Specimen class for describing each Specimen's markings. Add getMarkings()
+and setMarkings() accessor and mutator methods. Optionally, add a parameter to allow the program user to specify markings
+when creating a new Specimen object—this can be done with constructor overloading, by writing a second constructor for
+Specimen that takes a different number of parameters.
+
+
+An array is used to store the Specimen objects corresponding to the animals in the zoo.
+(b) Construct a method countSpecimens( Specimen[] animals, Species s ) that
+will output the number of specimens of the given species in the zoo.
+
+public int countSpecimens(Specimen[] animals, Species s){
+    int count = 0;
+    for(int n = 0; n<animals.length(); n++){
+        if(animals[n].equals(s)){
+            count++;
+        }
+    }
+    return count;
+}
+
+
+***(c) Construct an algorithm in pseudocode for listSpecies( Specimen[] animals ),
+which will generate a list of the different species in the zoo.
+
+
+
+17. For some operations, it will be more convenient to use a linked list to hold the Specimen
+objects corresponding to the animals in the zoo. In answering this question, you should use the
+JETS LinkedList class and may use the following methods.
+addHead()
+getHead()
+addTail()
+getTail()
+getNext()
+insert()
+delete()
+isEmpty()
+isFull()
+(a) Identify the features of an abstract data type (ADT).
+
+An abstract data type is such that the user does not know how data is processed or stored within the object (implementation),
+but they are able to use methods to interact with it.
+
+
+(b) Construct a method, makeList(), that builds a linked list containing the Specimen
+objects from an input array.
+
+LinkedList makeList( Specimen[] animals )
+{
+    ***insert code here
+}
+
+
+(c) Construct a method, makeSpeciesList( LinkedList animals ), that will return
+a linked list of Species objects, one for each animal specimen present in the zoo.
+Note that the list returned will contain duplicate Species objects if the zoo has more than
+one specimen of a given species.
+
+***
+
+
+(d) Construct a method, makeSpeciesListUnique( LinkedList allSpecies ), that
+will take a linked list of Species objects as described in (c) and produce a new linked list
+that contains only one Species object for each species in the zoo.
+
+***
+
